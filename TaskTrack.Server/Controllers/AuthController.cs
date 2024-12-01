@@ -14,7 +14,7 @@ namespace TaskTrack.Server.Controllers
             _authService = authService;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] UserRegisterDTO request)
         {
             var response = await _authService
@@ -28,5 +28,14 @@ namespace TaskTrack.Server.Controllers
 
             return response.Success ? Ok(response) : BadRequest(response.Message);
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] UserLoginDTO request)
+        {
+            var response = await _authService.Login(request.Username, request.Password);
+
+            return response.Success ? Ok(response) : BadRequest(response.Message);
+        }
+
     }
 }
