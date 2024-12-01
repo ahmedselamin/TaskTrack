@@ -1,5 +1,6 @@
 global using Microsoft.EntityFrameworkCore;
 global using TaskTrack.Server.Data;
+global using TaskTrack.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
