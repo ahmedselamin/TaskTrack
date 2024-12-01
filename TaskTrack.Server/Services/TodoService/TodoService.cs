@@ -88,7 +88,7 @@
                 return response;
             }
         }
-        public async Task<ServiceResponse<Todo>> UpdateTodo(int userId, Todo updatedTodo)
+        public async Task<ServiceResponse<Todo>> UpdateTodo(int userId, UpdateTodoDTO updatedTodo)
         {
             var response = new ServiceResponse<Todo>();
 
@@ -96,7 +96,6 @@
             {
                 var todo = await _context.Todos
                     .FirstOrDefaultAsync(t => t.Id == updatedTodo.Id && t.UserId == userId);
-
                 if (todo == null)
                 {
                     response.Success = false;
@@ -109,7 +108,7 @@
                 todo.Status = updatedTodo.Status;
                 todo.Timestamp = DateTime.Now;
 
-                await _context.Todos.AddAsync(todo);
+                _context.Todos.Add(todo);
                 await _context.SaveChangesAsync();
 
                 response.Data = todo;
