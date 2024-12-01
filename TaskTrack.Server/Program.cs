@@ -1,6 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 global using TaskTrack.Server.Data;
 global using TaskTrack.Shared;
+using TaskTrack.Server.Services.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
