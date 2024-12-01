@@ -1,5 +1,4 @@
-﻿
-namespace TaskTrack.Server.Services.TodoService
+﻿namespace TaskTrack.Server.Services.TodoService
 {
     public class TodoService : ITodoService
     {
@@ -60,9 +59,28 @@ namespace TaskTrack.Server.Services.TodoService
                 return response;
             }
         }
-        public Task<ServiceResponse<Todo>> CreateTodo(int userId, Todo todo)
+        public async Task<ServiceResponse<Todo>> CreateTodo(int userId, Todo todo)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<Todo>();
+
+            try
+            {
+                todo.UserId = userId;
+
+                await _context.Todos.AddAsync(todo);
+                await _context.SaveChangesAsync();
+
+                response.Data = todo;
+                response.Message = "New task added.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+                return response;
+            }
         }
         public Task<ServiceResponse<Todo>> UpdateTodo(int userId, Todo todo)
         {
