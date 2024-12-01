@@ -119,9 +119,38 @@
                 return response;
             }
         }
-        public Task<ServiceResponse<bool>> DeleteTodo(int userId, int todoId)
+        public async Task<ServiceResponse<bool>> DeleteTodo(int userId, int todoId)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<bool>();
+
+            try
+            {
+                var todo = await _context.Todos
+                    .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
+
+                if (todo == null)
+                {
+                    response.Success = false;
+                    response.Message = "Not found";
+
+                    return response;
+                }
+
+                _context.Todos.Remove(todo);
+                await _context.SaveChangesAsync();
+
+                response.Data = true;
+                response.Message = "Task deleted.";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+                return response;
+            }
         }
     }
 }
