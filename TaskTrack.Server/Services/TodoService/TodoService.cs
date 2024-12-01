@@ -59,13 +59,19 @@
                 return response;
             }
         }
-        public async Task<ServiceResponse<Todo>> CreateTodo(int userId, Todo todo)
+        public async Task<ServiceResponse<Todo>> CreateTodo(int userId, CreateTodoDTO newTodo)
         {
             var response = new ServiceResponse<Todo>();
 
             try
             {
-                todo.UserId = userId;
+                var todo = new Todo
+                {
+                    UserId = userId,
+                    Title = newTodo.Title,
+                    Status = newTodo.Status,
+                    Timestamp = DateTime.Now,
+                };
 
                 await _context.Todos.AddAsync(todo);
                 await _context.SaveChangesAsync();
