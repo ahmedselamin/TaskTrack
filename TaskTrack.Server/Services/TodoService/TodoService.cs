@@ -97,7 +97,6 @@
                 var todo = await _context.Todos
                     .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
 
-                    .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
                 if (todo == null)
                 {
                     response.Success = false;
