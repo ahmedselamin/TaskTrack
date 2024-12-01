@@ -46,8 +46,7 @@ namespace TaskTrack.Server.Controllers
         public async Task<ActionResult> UpdateTodo(int todoId, [FromBody] UpdateTodoDTO request)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            request.Id = todoId;
-            var response = await _todoService.UpdateTodo(userId, request);
+            var response = await _todoService.UpdateTodo(userId, todoId, request);
 
             return response.Success ? Ok(response) : BadRequest(response.Message);
         }
