@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskTrack.Client\TaskTrack.Client.csproj" />
+    <ProjectReference Include="..\TaskTrack.Shared\TaskTrack.Shared.csproj" />
   </ItemGroup>
 
 </Project>
