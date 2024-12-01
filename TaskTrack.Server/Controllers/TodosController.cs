@@ -42,10 +42,11 @@ namespace TaskTrack.Server.Controllers
             return response.Success ? Ok(response) : BadRequest(response.Message);
         }
 
-        [HttpPost("update-todo"), Authorize]
-        public async Task<ActionResult> UpdateTodo([FromBody] UpdateTodoDTO request)
+        [HttpPost("update-todo/{todoId:int}"), Authorize]
+        public async Task<ActionResult> UpdateTodo(int todoId, [FromBody] UpdateTodoDTO request)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            request.Id = todoId;
             var response = await _todoService.UpdateTodo(userId, request);
 
             return response.Success ? Ok(response) : BadRequest(response.Message);
