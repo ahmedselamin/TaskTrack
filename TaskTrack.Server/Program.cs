@@ -1,7 +1,8 @@
 global using Microsoft.EntityFrameworkCore;
 global using TaskTrack.Server.Data;
+global using TaskTrack.Server.Services.AuthService;
+global using TaskTrack.Server.Services.TodoService;
 global using TaskTrack.Shared;
-using TaskTrack.Server.Services.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 );
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITodoService, TodoService>();
 
 var app = builder.Build();
 
