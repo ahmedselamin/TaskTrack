@@ -50,10 +50,44 @@ namespace TaskTrack.Server.Services.AuthService
             }
         }
 
-        public Task<ServiceResponse<string>> Register(string username, string password)
+        public async Task<ServiceResponse<string>> Login(string username, string password)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<string>();
+
+            try
+            {
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Username.ToLower().Equals(username.ToLower()));
+                if (user == null)
+                {
+                    response.Success = false;
+                    response.Message = "User not found";
+
+                    return response;
+                }
+
+                if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+                {
+                    response.Success = false;
+                    response.Message = "Wrong password";
+
+                    return response;
+                }
+
+                response.Data = CreateToken(user);
+                response.Message = $"Welcome back, {user.Username}";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+                return response;
+            }
         }
+
         public async Task<bool> UserExists(string username)
         {
             if (await _context.Users.AnyAsync(user => user.Username.ToLower()
