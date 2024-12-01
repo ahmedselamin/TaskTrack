@@ -33,5 +33,14 @@ namespace TaskTrack.Server.Controllers
             return response.Success ? Ok(response) : BadRequest(response.Message);
         }
 
+        [HttpDelete("delete-todo/{todoId:int}"), Authorize]
+        public async Task<ActionResult> DeleteTodo(int todoId)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var response = await _todoService.DeleteTodo(userId, todoId);
+
+            return response.Success ? Ok(response) : BadRequest(response.Message);
+        }
+
     }
 }
