@@ -82,9 +82,42 @@
                 return response;
             }
         }
-        public Task<ServiceResponse<Todo>> UpdateTodo(int userId, Todo todo)
+        public async Task<ServiceResponse<Todo>> UpdateTodo(int userId, Todo updatedTodo)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<Todo>();
+
+            try
+            {
+                var todo = await _context.Todos
+                    .FirstOrDefaultAsync(t => t.Id == updatedTodo.Id && t.UserId == userId);
+
+                if (todo == null)
+                {
+                    response.Success = false;
+                    response.Message = "Not found";
+
+                    return response;
+                }
+
+                todo.Title = updatedTodo.Title;
+                todo.Status = updatedTodo.Status;
+                todo.Timestamp = DateTime.Now;
+
+                await _context.Todos.AddAsync(todo);
+                await _context.SaveChangesAsync();
+
+                response.Data = todo;
+                response.Message = "Task updated successfully";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+                return response;
+            }
         }
         public Task<ServiceResponse<bool>> DeleteTodo(int userId, int todoId)
         {
