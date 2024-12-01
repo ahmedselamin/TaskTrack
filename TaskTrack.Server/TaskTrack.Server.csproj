@@ -23,8 +23,4 @@
     <ProjectReference Include="..\TaskTrack.Shared\TaskTrack.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
