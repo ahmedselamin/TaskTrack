@@ -1,3 +1,4 @@
+global using System.Net.Http.Json;
 global using TaskTrack.Client.Services.AuthService;
 global using TaskTrack.Shared;
 using Microsoft.AspNetCore.Components.Web;
