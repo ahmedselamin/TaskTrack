@@ -4,7 +4,7 @@
 
 <h3>Login</h3>
 
-<EditForm>
+<EditForm Model="user" OnValidSubmit="HandleLogin">
     <div class="form-group">
         <label for="username">Username</label>
         <input id="username" @bind="user.Username" class="form-control" />
@@ -15,7 +15,7 @@
         <input id="password" type="password" @bind="user.Password" class="form-control" />
     </div>
 
-    <button class="btn btn-primary" @onclick="HandleLogin">Register</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
 
 @if (ErrorMessage != null)
@@ -29,16 +29,15 @@
 
     private async Task HandleLogin()
     {
-
         var response = await AuthService.Login(user);
 
         if (response.Success)
         {
-            Nav.NavigateTo("/");
+            Nav.NavigateTo("/");  // Navigate to the home page on successful login
         }
         else
         {
-            ErrorMessage = response.Message;
+            ErrorMessage = response.Message;  // Show error message if login fails
         }
     }
 }
