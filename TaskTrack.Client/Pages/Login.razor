@@ -15,7 +15,7 @@
         <input id="password" type="password" @bind="user.Password" class="form-control" />
     </div>
 
-    <button class="btn btn-primary" @onclick="HandleRegister">Register</button>
+    <button class="btn btn-primary" @onclick="HandleLogin">Register</button>
 </EditForm>
 
 @if (ErrorMessage != null)
@@ -27,7 +27,7 @@
     private UserLoginDTO user = new UserLoginDTO();
     private string? ErrorMessage;
 
-    private async Task HandleRegister()
+    private async Task HandleLogin()
     {
 
         var response = await AuthService.Login(user);
