@@ -4,7 +4,7 @@
 
 <h3>Register</h3>
 
-<EditForm>
+<EditForm Model="user" OnValidSubmit="HandleRegister">
     <div class="form-group">
         <label for="username">Username</label>
         <input id="username" @bind="user.Username" class="form-control" />
@@ -15,7 +15,7 @@
         <input id="password" type="password" @bind="user.Password" class="form-control" />
     </div>
 
-    <button class="btn btn-primary" @onclick="HandleRegister">Register</button>
+    <button type="submit" class="btn btn-primary">Register</button>
 </EditForm>
 
 @if (ErrorMessage != null)
@@ -29,16 +29,15 @@
 
     private async Task HandleRegister()
     {
-
         var response = await AuthService.Register(user);
 
         if (response.Success)
         {
-            Nav.NavigateTo("/login");
+            Nav.NavigateTo("/login");  
         }
         else
         {
-            ErrorMessage = response.Message;
+            ErrorMessage = response.Message;  
         }
     }
 }
