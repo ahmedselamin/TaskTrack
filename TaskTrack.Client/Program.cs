@@ -1,7 +1,8 @@
+global using TaskTrack.Client.Services.AuthService;
+global using TaskTrack.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TaskTrack.Client;
-using TaskTrack.Client.Services.AuthService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
