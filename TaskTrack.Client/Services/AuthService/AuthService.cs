@@ -20,5 +20,10 @@
             var result = await _http.PostAsJsonAsync("api/Auth/login", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
         }
+
+        public Task<bool> IsAuthenticated()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
