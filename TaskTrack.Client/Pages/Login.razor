@@ -1,6 +1,10 @@
 ﻿@page "/login"
+
 @inject IAuthService AuthService
 @inject NavigationManager Nav
+@inject ILocalStorage LocalStorage
+
+<PageTitle>Login</PageTitle>
 
 <h3>Login</h3>
 
@@ -33,11 +37,12 @@
 
         if (response.Success)
         {
-            Nav.NavigateTo("/");  // Navigate to the home page on successful login
+            await LocalStorage.SetItemAsync("token", result.Data);
+            Nav.NavigateTo("/");  
         }
         else
         {
-            ErrorMessage = response.Message;  // Show error message if login fails
+            ErrorMessage = response.Message;  
         }
     }
 }
